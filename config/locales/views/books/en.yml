@@ -1,0 +1,24 @@
+en:
+  books:
+    index:
+      title: Books
+      new: New book
+      show: Show
+    show:
+      title: Title
+      edit: Edit
+      destroy: Destroy
+      back: Back
+    new:
+      title: New book
+      back: Back
+    edit:
+      title: Edit
+      show: Show
+      back: Back
+    create:
+      success: Book was successfully created.
+    update:
+      success: Book was successfully updated.
+    destroy:
+      success: Book was successfully destroyed.
