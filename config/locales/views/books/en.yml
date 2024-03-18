@@ -1,24 +1,25 @@
 en:
   books:
-    index:
-      title: Books
-      new: New book
+    common: &common
       show: Show
+      back: Back
+    index:
+      <<: *common
+      title: "%{model} list"
+      new: New book
     show:
-      title: Title
+      <<: *common
       edit: Edit
       destroy: Destroy
-      back: Back
     new:
+      <<: *common
       title: New book
-      back: Back
     edit:
+      <<: *common
       title: Edit
-      show: Show
-      back: Back
     create:
-      success: Book was successfully created.
+      success: "%{model} was successfully created."
     update:
-      success: Book was successfully updated.
+      success: "%{model} was successfully updated."
     destroy:
-      success: Book was successfully destroyed.
+      success: "%{model} was successfully destroyed."
