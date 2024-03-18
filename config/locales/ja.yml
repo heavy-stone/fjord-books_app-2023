@@ -199,7 +199,7 @@ ja:
       last: "最後 &raquo;"
       previous: "&lsaquo; 前"
       next: "次 &rsaquo;"
-      truncate: "..."
+      truncate: "&hellip;"
   controllers:
     common:
       notice_create: "%{name}が作成されました。"
