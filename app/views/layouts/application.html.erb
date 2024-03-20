@@ -13,8 +13,12 @@
   <body class="<%= params[:action] %>">
     <% if user_signed_in? %>
       <p><%= t('users.shared.user', user: current_user.email) %></p>
-      <%= link_to t('users.registrations.edit.title', resource: User.model_name.human), edit_user_registration_path %> |
+      <p>
+      <%= link_to t('views.common.title_index', name: i18n_pluralize(Book.model_name.human)), books_path %> |
+      <%= link_to t('views.common.title_index', name: i18n_pluralize(User.model_name.human)), users_path %> |
+      <%= link_to t('views.common.show', name: User.model_name.human), user_path(current_user) %> |
       <%= link_to t('users.shared.links.sign_out'), destroy_user_session_path, data: { turbo_method: :delete } %>
+      </p>
     <% end %>
 
     <%= yield %>

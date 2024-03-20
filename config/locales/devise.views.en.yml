@@ -25,6 +25,9 @@ en:
         unconfirmed_email: Unconfirmed email
         unlock_token: Unlock token
         updated_at: Updated at
+        zip_code: Zip code
+        address: Address
+        introduction: Introduction
     models:
       user:
         one: User

@@ -25,6 +25,9 @@ ja:
         unconfirmed_email: 未確認Eメール
         unlock_token: ロック解除用トークン
         updated_at: 更新日
+        zip_code: 郵便番号
+        address: 住所
+        introduction: 自己紹介文
     models:
       user: ユーザー
   users:
