@@ -11,6 +11,12 @@
   </head>
 
   <body class="<%= params[:action] %>">
+    <% if user_signed_in? %>
+      <p><%= t('users.shared.user', user: current_user.email) %></p>
+      <%= link_to t('users.registrations.edit.title', resource: User.model_name.human), edit_user_registration_path %> |
+      <%= link_to t('users.shared.links.sign_out'), destroy_user_session_path, data: { turbo_method: :delete } %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
