@@ -1,21 +1,21 @@
 <p>
   <strong><%= User.human_attribute_name(:email) %>:</strong>
-  <%= @user.email %>
+  <%= h(@user.email) %>
 </p>
 
 <p>
   <strong><%= User.human_attribute_name(:zip_code) %>:</strong>
-  <%= @user.zip_code %>
+  <%= h(@user.zip_code) %>
 </p>
 
 <p>
   <strong><%= User.human_attribute_name(:address) %>:</strong>
-  <%= @user.address %>
+  <%= h(@user.address) %>
 </p>
 
 <p>
   <strong><%= User.human_attribute_name(:introduction) %>:</strong>
-  <%= @user.introduction %>
+  <%= simple_format(h(@user.introduction)) %>
 </p>
 
 <% if current_user == @user %>
