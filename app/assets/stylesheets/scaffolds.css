@@ -293,6 +293,7 @@ form em,
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
+form input[type="file"],
 form textarea {
   width: 100%;
   padding: 6px;
