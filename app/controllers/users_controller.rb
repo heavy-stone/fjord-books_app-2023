@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   include ActiveStorage::SetCurrent
 
   def index
-    @users = User.order(:id).page(params[:page])
+    @users = User.order(:id).page(params[:page]).with_attached_icon
   end
 
   def show
