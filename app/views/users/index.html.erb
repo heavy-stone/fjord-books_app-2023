@@ -11,7 +11,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= h(user.email) %></td>
+        <td><%= user.email %></td>
         <td><%= link_to t('views.common.show', name: User.model_name.human), user %></td>
       </tr>
     <% end %>
