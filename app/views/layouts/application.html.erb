@@ -11,6 +11,23 @@
   </head>
 
   <body class="<%= params[:action] %>">
+    <% if user_signed_in? %>
+      <p><%= t('users.shared.user', user: current_user.email) %></p>
+      <p>
+      <%= link_to t('views.common.title_index', name: i18n_pluralize(Book.model_name.human)), books_path %> |
+      <%= link_to t('views.common.title_index', name: i18n_pluralize(User.model_name.human)), users_path %> |
+      <%= link_to t('views.common.show', name: User.model_name.human), user_path(current_user) %> |
+      <%= link_to t('users.shared.links.sign_out'), destroy_user_session_path, data: { turbo_method: :delete } %>
+      </p>
+    <% end %>
+
+    <% if alert.present? %>
+      <p stype="color: red"><%= alert %></p>
+    <% end %>
+    <% if notice.present? %>
+      <p style="color: green"><%= notice %></p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
