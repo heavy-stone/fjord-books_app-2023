@@ -3,7 +3,7 @@
 <div id="reports">
   <ul>
     <% @reports.each do |report| %>
-      <li><%= l(report.created_at, format: :long) %>: <%= link_to report.title, report %></li>
+      <li><%= link_to report.title, report %><br><%= report.user.name.presence || report.user.email %> <%= l(report.created_at, format: :long) %></li>
     <% end %>
   </ul>
 </div>
