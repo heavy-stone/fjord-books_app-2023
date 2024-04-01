@@ -1,32 +1,34 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[destroy]
-
   def create
     @comment = Comment.new(comment_params.merge(user: current_user))
     if @comment.save
       redirect_to polymorphic_url(@comment.commentable), notice: t('controllers.common.notice_create', name: Comment.model_name.human)
     else
-      @report = @comment.commentable
-      flash.now[:alert] = t('controllers.common.alert_create', name: Comment.model_name.human)
-      render 'reports/show', status: :unprocessable_entity
+      render_commentable_show
     end
   end
 
   def destroy
-    @comment.destroy
-
-    redirect_to polymorphic_url(@comment.commentable), notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
+    @comment = current_user.comments.find(params[:id])
+    if @comment.destroy
+      redirect_to polymorphic_url(@comment.commentable), notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
+    else
+      render_commentable_show
+    end
   end
 
   private
 
-  def set_comment
-    @comment = Comment.find(params[:id])
-  end
-
   def comment_params
     params.require(:comment).permit(:commentable_type, :commentable_id, :content)
+  end
+
+  def render_commentable_show
+    flash.now[:alert] = t("controllers.common.alert_#{action_name}", name: Comment.model_name.human)
+    singular_commentable_name = @comment.commentable_type.downcase
+    instance_variable_set("@#{singular_commentable_name}", @comment.commentable)
+    render "#{singular_commentable_name.pluralize}/show", status: :unprocessable_entity
   end
 end

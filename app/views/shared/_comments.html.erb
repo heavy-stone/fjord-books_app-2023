@@ -1,5 +1,5 @@
 <h2><%= t('views.common.title_index', name: Comment.model_name.human) %></h2>
-<%= render(partial: 'shared/comment', collection: report.comments, as: :comment) || t('views.common.no_record', name: Comment.model_name.human) %>
+<%= render(partial: 'shared/comment', collection: commentable.comments, as: :comment) || t('views.common.no_record', name: Comment.model_name.human) %>
 
 <h2><%= t('views.common.title_new', name: Comment.model_name.human) %></h2>
-<%= render 'shared/comment_form', comment: report.comments.new %>
+<%= render 'shared/comment_form', comment: commentable.comments.new %>
