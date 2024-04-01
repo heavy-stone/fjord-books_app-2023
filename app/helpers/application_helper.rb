@@ -15,7 +15,7 @@ module ApplicationHelper
     I18n.locale == :ja ? "#{count}件の#{t('views.common.error')}" : pluralize(count, t('views.common.error'))
   end
 
-  def nll2br(text)
+  def nl2br(text)
     h(text).gsub(/\R/, '<br>')
   end
 end
