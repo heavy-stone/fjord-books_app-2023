@@ -1,6 +1,6 @@
 <div class="show-item" id="<%= dom_id comment %>">
   <p>
-    <%= comment.user.name.presence || comment.user.email %> <%= l(comment.created_at, format: :long) %><br>
+    <%= comment.user.display_name %> <%= l(comment.created_at, format: :long) %><br>
     <%== nl2br comment.content %><br>
     <% if current_user == comment.user %>
       <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), comment, method: :delete, data: {turbo_confirm: t('views.common.delete_confirm')} %>
