@@ -3,8 +3,6 @@
 class ReportsController < ApplicationController
   before_action :set_current_user_report, only: %i[edit update destroy]
 
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
   def index
     @reports = Report.order(id: :desc).page(params[:page])
   end
@@ -56,9 +54,5 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:user_id, :title, :content)
-  end
-
-  def record_not_found
-    redirect_to reports_url, alert: t('activerecord.errors.messages.not_found', record: Report.model_name.human)
   end
 end
