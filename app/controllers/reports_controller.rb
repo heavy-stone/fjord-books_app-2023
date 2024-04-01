@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   before_action :set_current_user_report, only: %i[edit update destroy]
 
   def index
-    @reports = Report.order(id: :desc).page(params[:page])
+    @reports = Report.eager_load(:user).order(id: :desc).page(params[:page])
   end
 
   def show
