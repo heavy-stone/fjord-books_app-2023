@@ -21,7 +21,5 @@
 <div class="field">
   <%= f.label :icon %><br />
   <%= f.file_field :icon, accept: 'image/png, image/jpeg, image/gif' %>
-  <% if f.object.icon.attached? %>
-    <%= image_tag f.object.icon.variant(resize_to_limit: [100, 100]).processed.url %>
-  <% end %>
+  <%= image_tag f.object.icon.variant(resize_to_limit: [100, 100]).processed.url if f.object.icon.attached? && f.object.icon.blob&.persisted? %>
 </div>
