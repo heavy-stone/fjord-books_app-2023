@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  if Rails.env.development?
-    before_action do
-      ActiveStorage::Current.url_options = { protocol: 'http', host: 'localhost', port: 3000 }
-    end
-  end
-
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
