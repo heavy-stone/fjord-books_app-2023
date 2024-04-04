@@ -16,6 +16,8 @@ module ApplicationHelper
   end
 
   def format_content(content)
-    safe_join(content.split("\n"), tag.br)
+    safe_joined_content = safe_join(content.split("\n"), tag.br)
+    uri_reg = URI::DEFAULT_PARSER.make_regexp(%w[http https])
+    safe_joined_content.gsub(uri_reg) { %(<a href='#{::Regexp.last_match(0)}' target='_blank'>#{::Regexp.last_match(0)}</a>) }
   end
 end
