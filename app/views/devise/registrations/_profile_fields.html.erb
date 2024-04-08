@@ -17,3 +17,9 @@
   <%= f.label :self_introduction %><br />
   <%= f.text_area :self_introduction %>
 </div>
+
+<div class="field">
+  <%= f.label :icon %><br />
+  <%= f.file_field :icon, accept: 'image/png, image/jpeg, image/gif' %>
+  <%= image_tag f.object.icon.variant(resize_to_limit: [100, 100]) if f.object.icon.attached? && f.object.icon.blob&.persisted? %>
+</div>
