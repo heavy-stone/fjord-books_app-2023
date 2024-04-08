@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
   def update
     success = true
     ActiveRecord::Base.transaction do
-      success &= mention_destroy_all
+      success &= destroy_all_mentions
       unless success
         logger.error t('controllers.common.alert_destroy_all', name: Mention.model_name.human)
         raise ActiveRecord::Rollback
@@ -74,7 +74,7 @@ class ReportsController < ApplicationController
     params.require(:report).permit(:title, :content)
   end
 
-  def mention_destroy_all
+  def destroy_all_mentions
     mentions = @report.source_mentions.destroy_all
     mentions.all?(&:destroyed?)
   end
