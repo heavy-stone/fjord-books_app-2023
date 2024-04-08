@@ -3,7 +3,7 @@
     <%= comment.user.display_name %> <%= l(comment.created_at, format: :long) %><br>
     <%== nl2br comment.content %><br>
     <% if current_user == comment.user %>
-      <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), comment, method: :delete, data: {turbo_confirm: t('views.common.delete_confirm')} %>
+      <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([comment.commentable, comment]), method: :delete, data: {turbo_confirm: t('views.common.delete_confirm')} %>
     <% end %>
   </p>
 </div>
