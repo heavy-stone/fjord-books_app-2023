@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_02_075355) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["destination_id"], name: "index_mentions_on_destination_id"
+    t.index ["source_id", "destination_id"], name: "index_mentions_on_source_id_and_destination_id", unique: true
     t.index ["source_id"], name: "index_mentions_on_source_id"
   end
 

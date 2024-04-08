@@ -6,4 +6,5 @@ class Mention < ApplicationRecord
 
   validates :source, presence: true
   validates :destination, presence: true
+  validates :source_id, uniqueness: { scope: :destination_id }
 end
