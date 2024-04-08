@@ -21,25 +21,47 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(report_params)
 
+    @report.build_mentions(report_params[:content])
     if @report.save
       redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
     else
+      flash.now[:alert] = t('controllers.common.alert_create', name: Report.model_name.human)
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if @report.update(report_params)
+    success = true
+    ActiveRecord::Base.transaction do
+      success &= mention_destroy_all
+      unless success
+        logger.error t('controllers.common.alert_destroy_all', name: Mention.model_name.human)
+        raise ActiveRecord::Rollback
+      end
+
+      @report.build_mentions(report_params[:content])
+      success &= @report.update(report_params)
+      unless success
+        logger.error t('controllers.common.alert_update', name: Report.model_name.human)
+        raise ActiveRecord::Rollback
+      end
+    end
+
+    if success
       redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else
+      flash.now[:alert] = t('controllers.common.alert_update', name: Report.model_name.human)
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @report.destroy
-
-    redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
+    if @report.destroy
+      redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
+    else
+      flash.now[:alert] = t('controllers.common.alert_destroy', name: Report.model_name.human)
+      render :show, status: :unprocessable_entity
+    end
   end
 
   private
@@ -50,5 +72,10 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:title, :content)
+  end
+
+  def mention_destroy_all
+    mentions = @report.source_mentions.destroy_all
+    mentions.all?(&:destroyed?)
   end
 end

@@ -1,0 +1,6 @@
+<% if report.mentioned_reports.present? %>
+  <p><%= t('.title', name: Report.model_name.human) %></p>
+  <ul>
+    <%= render partial: 'mention', collection: report.mentioned_reports, as: :report %>
+  </ul>
+<% end %>
