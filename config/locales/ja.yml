@@ -212,6 +212,8 @@ ja:
       alert_create: "%{name}の作成に失敗しました。"
       alert_update: "%{name}の更新に失敗しました。"
       alert_destroy: "%{name}の削除に失敗しました。"
+    errors:
+      not_implemented: "%{name}が実装されていません"
   layouts:
     application:
       menu: メニュー

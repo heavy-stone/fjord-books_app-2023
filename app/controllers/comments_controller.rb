@@ -3,11 +3,11 @@
 class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
-    @comment.commentable = Book.find(params[:book_id]) if params[:book_id].present?
-    @comment.commentable = Report.find(params[:report_id]) if params[:report_id].present?
+    set_commentable
     if @comment.save
       redirect_to polymorphic_url(@comment.commentable), notice: t('controllers.common.notice_create', name: Comment.model_name.human)
     else
+      flash.now[:alert] = t('controllers.common.alert_create', name: Comment.model_name.human)
       render_commentable_show
     end
   end
@@ -17,6 +17,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_to polymorphic_url(@comment.commentable), notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
     else
+      flash.now[:alert] = t('controllers.common.alert_destroy', name: Comment.model_name.human)
       render_commentable_show
     end
   end
@@ -27,10 +28,11 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:content)
   end
 
+  def set_commentable
+    raise NotImplementedError, t('controllers.errors.not_implemented', name: "#{self.class}##{__method__}")
+  end
+
   def render_commentable_show
-    flash.now[:alert] = t("controllers.common.alert_#{action_name}", name: Comment.model_name.human)
-    singular_commentable_name = @comment.commentable_type.downcase
-    instance_variable_set("@#{singular_commentable_name}", @comment.commentable)
-    render "#{singular_commentable_name.pluralize}/show", status: :unprocessable_entity
+    raise NotImplementedError, t('controllers.errors.not_implemented', name: "#{self.class}##{__method__}")
   end
 end
