@@ -7,6 +7,7 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+        not_found: "%{record}が見つかりません"
   date:
     abbr_day_names:
     - 日
@@ -196,6 +197,7 @@ ja:
       validation_error: "%{errors}があるため、この%{name}は保存できませんでした"
       title_show: "%{name}の詳細"
       sign_out: ログアウト
+      no_record: "%{name}はありません"
     pagination:
       first: '« 最初'
       last: '最後 »'
@@ -207,6 +209,11 @@ ja:
       notice_create: "%{name}が作成されました。"
       notice_update: "%{name}が更新されました。"
       notice_destroy: "%{name}が削除されました。"
+      alert_create: "%{name}の作成に失敗しました。"
+      alert_update: "%{name}の更新に失敗しました。"
+      alert_destroy: "%{name}の削除に失敗しました。"
+    errors:
+      not_implemented: "%{name}が実装されていません"
   layouts:
     application:
       menu: メニュー
