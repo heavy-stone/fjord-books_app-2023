@@ -27,6 +27,12 @@ class Report < ApplicationRecord
     created_at.to_date
   end
 
+  def format_content
+    safe_joined_content = ApplicationController.helpers.format_content(content)
+    uri_reg = URI::DEFAULT_PARSER.make_regexp(%w[http https])
+    safe_joined_content.gsub(uri_reg) { %(<a href='#{::Regexp.last_match(0)}' target='_blank'>#{::Regexp.last_match(0)}</a>) }
+  end
+
   def build_mentions(content)
     URI.extract(content, %w[http https]).uniq.each do |url|
       path = Rails.application.routes.recognize_path(url)
