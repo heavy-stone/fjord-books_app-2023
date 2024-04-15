@@ -33,14 +33,47 @@ class Report < ApplicationRecord
     safe_joined_content.gsub(uri_reg) { %(<a href='#{::Regexp.last_match(0)}' target='_blank'>#{::Regexp.last_match(0)}</a>) }
   end
 
+  def transaction_save(report_params, action_name = 'create')
+    success = true
+    ActiveRecord::Base.transaction do
+      if action_name == 'update'
+        success &= destroy_all_mentions
+        unless success
+          logger.error I18n.t('controllers.common.alert_destroy_all', name: Mention.model_name.human)
+          raise ActiveRecord::Rollback
+        end
+        assign_attributes(report_params)
+      end
+
+      build_mentions(report_params[:content])
+      success &= save
+      unless success
+        logger.error I18n.t("controllers.common.alert_#{action_name}", name: Report.model_name.human)
+        raise ActiveRecord::Rollback
+      end
+    end
+    success
+  end
+
+  private
+
+  def destroy_all_mentions
+    mentions = source_mentions.destroy_all
+    mentions.all?(&:destroyed?)
+  end
+
   def build_mentions(content)
-    URI.extract(content, %w[http https]).uniq.each do |url|
+    report_show_path_ids = URI.extract(content, %w[http https]).uniq.map do |url|
       path = Rails.application.routes.recognize_path(url)
       is_report_show_path = path[:controller] == 'reports' && path[:action] == 'show'
-      mentioning_report_exists = Report.exists?(id: path[:id])
-      next if !is_report_show_path || !mentioning_report_exists
+      next if !is_report_show_path || path[:id].to_i == id
 
-      source_mentions.build(destination_id: path[:id])
+      path[:id]
+    end
+
+    valid_ids = Report.where(id: report_show_path_ids).pluck(:id)
+    valid_ids.each do |id|
+      source_mentions.build(destination_id: id)
     end
   end
 end
