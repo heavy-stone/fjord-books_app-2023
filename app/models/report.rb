@@ -37,7 +37,7 @@ class Report < ApplicationRecord
     success = true
     ActiveRecord::Base.transaction do
       if action_name == 'update'
-        success &= destroy_all_mentions
+        success = destroy_all_mentions
         unless success
           logger.error I18n.t('controllers.common.alert_destroy_all', name: Mention.model_name.human)
           raise ActiveRecord::Rollback
@@ -46,11 +46,8 @@ class Report < ApplicationRecord
       end
 
       build_mentions(report_params[:content])
-      success &= save
-      unless success
-        logger.error I18n.t("controllers.common.alert_#{action_name}", name: Report.model_name.human)
-        raise ActiveRecord::Rollback
-      end
+      success = save
+      raise ActiveRecord::Rollback unless success
     end
     success
   end
