@@ -17,3 +17,7 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+Minitest.after_run do
+  FileUtils.rm_rf(Dir[Rails.root.join("public/uploads_#{Rails.env}/")])
+end
