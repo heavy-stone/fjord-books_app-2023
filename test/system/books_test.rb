@@ -33,7 +33,7 @@ class BooksTest < ApplicationSystemTestCase
     fill_in 'タイトル', with: 'ソフトウェアのテスト技法'
     fill_in 'メモ', with: '色々なテスト技法が身につく！'
     fill_in '著者', with: 'Lee Copeland'
-    attach_file '画像', Rails.root.join('test/fixtures/files/images/software.png')
+    attach_file '画像', Rails.root.join('test/fixtures/files/images/software.jpg')
     click_on '登録する'
 
     assert_selector 'h1', text: '本の詳細'
@@ -57,7 +57,7 @@ class BooksTest < ApplicationSystemTestCase
     fill_in 'タイトル', with: 'Ruby on Rails Tutorial'
     fill_in 'メモ', with: "It's difficult, but it's useful!"
     fill_in '著者', with: 'MICHAEL HARTL'
-    attach_file '画像', Rails.root.join('test/fixtures/files/images/rails_tutorial2.png')
+    attach_file '画像', Rails.root.join('test/fixtures/files/images/rails_tutorial2.jpg')
     click_on '更新する'
 
     assert_selector 'h1', text: '本の詳細'
