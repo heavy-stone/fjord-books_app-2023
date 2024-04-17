@@ -4,8 +4,8 @@ require 'application_system_test_case'
 
 class BooksTest < ApplicationSystemTestCase
   setup do
-    user = users(:alice)
-    @book = books(:rails_tutorial)
+    create(:user)
+    @book = create(:book)
 
     visit root_url
     fill_in 'Eメール', with: 'alice@example.com'
@@ -57,7 +57,7 @@ class BooksTest < ApplicationSystemTestCase
     fill_in 'タイトル', with: 'Ruby on Rails Tutorial'
     fill_in 'メモ', with: "It's difficult, but it's useful!"
     fill_in '著者', with: 'MICHAEL HARTL'
-    attach_file '画像', Rails.root.join('test/fixtures/files/images/rails_tutorial2/rails_tutorial.png')
+    attach_file '画像', Rails.root.join('test/fixtures/files/images/rails_tutorial2.png')
     click_on '更新する'
 
     assert_selector 'h1', text: '本の詳細'
