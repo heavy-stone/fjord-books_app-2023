@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
   end
 
   def update
-    success = @report.transaction_save(report_params, 'update')
+    success = @report.transaction_save(report_params)
     if success
       redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else

@@ -33,23 +33,21 @@ class Report < ApplicationRecord
     safe_joined_content.gsub(uri_reg) { %(<a href='#{::Regexp.last_match(0)}' target='_blank'>#{::Regexp.last_match(0)}</a>) }
   end
 
-  def transaction_save(report_params, action_name = 'create')
-    success = true
-    ActiveRecord::Base.transaction do
-      if action_name == 'update'
-        success = destroy_all_mentions
-        unless success
-          logger.error I18n.t('controllers.common.alert_destroy_all', name: Mention.model_name.human)
-          raise ActiveRecord::Rollback
-        end
-        assign_attributes(report_params)
+  def transaction_save(report_params)
+    transaction do
+      success = destroy_all_mentions
+      unless success
+        logger.error I18n.t('controllers.common.alert_destroy_all', name: Mention.model_name.human)
+        raise ActiveRecord::Rollback
       end
+      assign_attributes(report_params)
 
       build_mentions(report_params[:content])
       success = save
       raise ActiveRecord::Rollback unless success
+
+      success
     end
-    success
   end
 
   private
