@@ -6,4 +6,10 @@ FactoryBot.define do
     user
     association :commentable, factory: :book
   end
+
+  factory :report_comment, class: Comment do
+    content { '日報書きました！' }
+    user
+    association :commentable, factory: :report
+  end
 end
