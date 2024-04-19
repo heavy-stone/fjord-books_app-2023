@@ -19,9 +19,9 @@ class BooksTest < ApplicationSystemTestCase
     visit books_url
 
     assert_selector 'h1', text: '本の一覧'
-    assert_text @book.title
-    assert_text @book.memo
-    assert_text @book.author
+    assert_text 'Ruby on Rails チュートリアル'
+    assert_text '難しいですがためになります！'
+    assert_text 'Michael Hartl'
     find("img[src='#{@book.picture_url}']")
   end
 
@@ -47,9 +47,9 @@ class BooksTest < ApplicationSystemTestCase
     visit book_url(@book)
 
     assert_selector 'h1', text: '本の詳細'
-    assert_text @book.title
-    assert_text @book.memo
-    assert_text @book.author
+    assert_text 'Ruby on Rails チュートリアル'
+    assert_text '難しいですがためになります！'
+    assert_text 'Michael Hartl'
     find("img[src='#{@book.picture_url}']")
     click_on 'この本を編集'
 
@@ -75,6 +75,6 @@ class BooksTest < ApplicationSystemTestCase
 
     assert_selector 'h1', text: '本の一覧'
     assert_text '本が削除されました。'
-    assert_no_text @book.title
+    assert_no_text 'Ruby on Rails チュートリアル'
   end
 end
