@@ -207,6 +207,10 @@ ja:
       notice_create: "%{name}が作成されました。"
       notice_update: "%{name}が更新されました。"
       notice_destroy: "%{name}が削除されました。"
+      alert_create: "%{name}を作成できませんでした。"
+      alert_update: "%{name}を更新できませんでした。"
+      alert_destroy: "%{name}を削除できませんでした。"
+      alert_destroy_all: "%{name}一覧を削除できませんでした。"
   layouts:
     menu:
       menu: メニュー
@@ -221,3 +225,8 @@ ja:
     registrations:
       edit:
         title: "アカウント編集"
+  reports:
+    mentions:
+      title: "この%{name}は以下の%{name}からリンクされています"
+    mention:
+      link_from: からリンク

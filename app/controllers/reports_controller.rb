@@ -20,26 +20,32 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.new(report_params)
-
-    if @report.save
+    success = @report.transaction_save(report_params)
+    if success
       redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
     else
+      flash.now[:alert] = t('controllers.common.alert_create', name: Report.model_name.human)
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if @report.update(report_params)
+    success = @report.transaction_save(report_params)
+    if success
       redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else
+      flash.now[:alert] = t('controllers.common.alert_update', name: Report.model_name.human)
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @report.destroy
-
-    redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
+    if @report.destroy
+      redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
+    else
+      flash.now[:alert] = t('controllers.common.alert_destroy', name: Report.model_name.human)
+      render :show, status: :unprocessable_entity
+    end
   end
 
   private
