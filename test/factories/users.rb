@@ -6,4 +6,10 @@ FactoryBot.define do
     name { 'Alice Doe' }
     password { 'password' }
   end
+
+  factory :other_user, class: User do
+    email { 'bob@example.com' }
+    name { 'Bob Smith' }
+    password { 'password123' }
+  end
 end
