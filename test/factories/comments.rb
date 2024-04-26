@@ -2,13 +2,13 @@
 
 FactoryBot.define do
   factory :book_comment, class: Comment do
-    content { '素晴らしい本ですね！' }
+    sequence(:content) { "本のコメント#{_1}" }
     user
     association :commentable, factory: :book
   end
 
   factory :report_comment, class: Comment do
-    content { '日報書きました！' }
+    sequence(:content) { "日報のコメント#{_1}" }
     user
     association :commentable, factory: :report
   end

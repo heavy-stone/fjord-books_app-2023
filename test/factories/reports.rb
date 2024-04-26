@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :report do
     user
-    title { '初日報' }
-    content { '初めての日報です。' }
+    sequence(:title) { "日報のタイトル#{_1}" }
+    sequence(:content) { "日報の内容#{_1}" }
   end
 end
