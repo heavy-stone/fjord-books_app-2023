@@ -4,7 +4,8 @@ require 'application_system_test_case'
 
 class ReportsTest < ApplicationSystemTestCase
   setup do
-    @report = create(:report)
+    alice = create(:user, email: 'alice@example.com', name: 'Alice Doe', password: 'password')
+    @report = create(:report, user: alice, title: '初日報', content: '初めての日報です。')
 
     visit root_url
     fill_in 'Eメール', with: 'alice@example.com'

@@ -4,8 +4,14 @@ require 'application_system_test_case'
 
 class BooksTest < ApplicationSystemTestCase
   setup do
-    create(:user)
-    @book = create(:book)
+    create(:user, email: 'alice@example.com', name: 'Alice Doe', password: 'password')
+    @book = create(
+      :book,
+      title: 'Ruby on Rails チュートリアル',
+      memo: '難しいですがためになります！',
+      author: 'Michael Hartl',
+      picture: Rack::Test::UploadedFile.new(Rails.root.join('test/fixtures/files/images/rails_tutorial1.jpg'), 'image/jpg')
+    )
 
     visit root_url
     fill_in 'Eメール', with: 'alice@example.com'

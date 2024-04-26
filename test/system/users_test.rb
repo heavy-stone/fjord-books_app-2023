@@ -3,6 +3,9 @@
 require 'application_system_test_case'
 
 class UsersTest < ApplicationSystemTestCase
+  setup do
+    @alice = create(:user, email: 'alice@example.com', name: 'Alice Doe', password: 'password')
+  end
   test 'should create user' do
     visit new_user_registration_url
 
@@ -31,8 +34,6 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test 'should update user without password' do
-    user = create(:user)
-
     visit root_url
     fill_in 'Eメール', with: 'alice@example.com'
     fill_in 'パスワード', with: 'password'
@@ -60,12 +61,10 @@ class UsersTest < ApplicationSystemTestCase
     assert_text '987-6543'
     assert_text 'New York'
     assert_text 'Hello, I am Alice!'
-    assert user.reload.avatar.attached?
+    assert @alice.reload.avatar.attached?
   end
 
   test 'should update user password and logout and login' do
-    create(:user)
-
     visit root_url
     fill_in 'Eメール', with: 'alice@example.com'
     fill_in 'パスワード', with: 'password'
@@ -98,7 +97,6 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test 'should destroy user' do
-    create(:user)
     user_count = User.count
 
     visit root_url
@@ -123,7 +121,6 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test 'should reset password' do
-    create(:user)
     visit root_url
     click_on 'パスワードを忘れましたか？'
 
