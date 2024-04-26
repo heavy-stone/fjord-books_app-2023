@@ -38,6 +38,10 @@ class BooksTest < ApplicationSystemTestCase
 
     assert_selector 'h1', text: '本の詳細'
     assert_text '本が作成されました。'
+    assert_text 'ソフトウェアのテスト技法'
+    assert_text '色々なテスト技法が身につく！'
+    assert_text 'Lee Copeland'
+    find("img[src='/uploads_test/book/picture/#{Book.last.id}/software.jpg']")
     click_on '本の一覧に戻る'
 
     assert_selector 'h1', text: '本の一覧'
@@ -50,7 +54,7 @@ class BooksTest < ApplicationSystemTestCase
     assert_text 'Ruby on Rails チュートリアル'
     assert_text '難しいですがためになります！'
     assert_text 'Michael Hartl'
-    find("img[src='#{@book.picture_url}']")
+    find("img[src='/uploads_test/book/picture/#{@book.id}/rails_tutorial1.jpg']")
     click_on 'この本を編集'
 
     assert_selector 'h1', text: '本の編集'
@@ -62,11 +66,10 @@ class BooksTest < ApplicationSystemTestCase
 
     assert_selector 'h1', text: '本の詳細'
     assert_text '本が更新されました。'
-    book = @book.reload
-    assert_text book.title
-    assert_text book.memo
-    assert_text book.author
-    find("img[src='#{book.picture_url}']")
+    assert_text 'Ruby on Rails Tutorial'
+    assert_text "It's difficult, but it's useful!"
+    assert_text 'MICHAEL HARTL'
+    find("img[src='/uploads_test/book/picture/#{@book.id}/rails_tutorial2.jpg']")
   end
 
   test 'should destroy Book' do
