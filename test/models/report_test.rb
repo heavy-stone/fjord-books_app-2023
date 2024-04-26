@@ -17,8 +17,9 @@ class ReportTest < ActiveSupport::TestCase
   end
 
   test 'should get created on' do
-    now = Time.current
-    report = Report.new(created_at: now)
-    assert_equal now.to_date, report.created_on
+    time = Time.zone.parse('2024-04-26 14:34:43.539077000')
+    report = Report.new(created_at: time)
+    expected = Date.new(2024, 4, 26)
+    assert_equal expected, report.created_on
   end
 end
