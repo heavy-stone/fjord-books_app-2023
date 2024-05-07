@@ -68,6 +68,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
+    ansi (1.5.0)
     ast (2.4.2)
     bcrypt (3.1.19)
     better_html (2.0.2)
@@ -119,6 +120,11 @@ GEM
       rubocop
       smart_properties
     erubi (1.12.0)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
@@ -178,6 +184,11 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.4)
     minitest (5.19.0)
+    minitest-reporters (1.6.1)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     msgpack (1.7.2)
     net-imap (0.3.7)
       date
@@ -323,6 +334,7 @@ DEPENDENCIES
   devise
   devise-i18n
   erb_lint
+  factory_bot_rails
   faker
   i18n_generators
   image_processing (~> 1.2)
@@ -330,6 +342,7 @@ DEPENDENCIES
   jbuilder
   kaminari
   letter_opener_web
+  minitest-reporters
   puma
   rails (~> 7.0.6)
   rails_autolink

@@ -35,5 +35,6 @@
 /config/master.key
 
 /public/uploads
+/public/uploads_test
 
 .env
